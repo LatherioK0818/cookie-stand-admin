@@ -1,15 +1,39 @@
-import { initialHourlySales } from "./data";
+import { timeSlots } from "./data";
 
 export default function CreateForm({ onCreate }) {
+    // Function to generate random hourly sales
+    const generateRandomSales = (minCustomers, maxCustomers, avgCookies) => {
+      // Calculate random number of customers
+      const customers = Math.floor(Math.random() * (maxCustomers - minCustomers + 1)) + minCustomers;
+      return (customers * avgCookies)
+    }
+
+    // Function to create the sales report for a location
+    const createSalesReport = (minCustomers, maxCustomers, avgCookies) => {
+      const salesData = timeSlots.map(() => generateRandomSales(minCustomers, maxCustomers, avgCookies));
+      // const totalSales = salesData.reduce((total, current) => total + current, 0);
+      return salesData
+    }
+  
     const handleSubmit = (event) => {
       event.preventDefault();
+      
+      let location = event.target.location.value
+      let minCustomers = Number(event.target.minCustomers.value)
+      let maxCustomers = Number(event.target.maxCustomers.value)
+      let avgCookies = Number(event.target.avgCookies.value)
+      let hourly_sales = createSalesReport(minCustomers, maxCustomers, avgCookies)
+
+      console.log(avgCookies)
+
       const formData = {
-        location: event.target.location.value,
-        minCustomers: event.target.minCustomers.value,
-        maxCustomers: event.target.maxCustomers.value,
-        avgCookies: event.target.avgCookies.value,
-        hourly_sales: initialHourlySales,
+        location,
+        minCustomers,
+        maxCustomers,
+        avgCookies,
+        hourly_sales,
       };
+
       onCreate(formData);
     };
   

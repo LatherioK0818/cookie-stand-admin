@@ -1,8 +1,13 @@
-import { timeSlots } from '/components/data'; // Adjust the path as necessary
+import { timeSlots } from '/components/data'; 
+import {hourlySales} from './CreateForm';
+
 
 export default function ReportTable({ reports }) {
+
   const calculateHourlyTotals = (reports) => {
+
     const hourlyTotals = Array(timeSlots.length).fill(0);
+    
     reports.forEach(report => {
       report.hourly_sales.forEach((sales, index) => {
         hourlyTotals[index] += sales;
@@ -23,7 +28,7 @@ export default function ReportTable({ reports }) {
   return (
     <div className="w-full max-w-2xl mx-auto mt-8 overflow-auto text-black y">
       <table className="w-full bg-green-300 rounded-lg">
-        <thead className="text-black bg-green-500">
+        <thead className="text-black bg-green-600">
           <tr>
             <th>Location</th>
             {timeSlots.map((time, index) => (
